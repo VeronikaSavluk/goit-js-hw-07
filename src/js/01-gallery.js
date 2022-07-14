@@ -1,11 +1,33 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-
-console.log(galleryItems);
-
 // Створення і рендер розмітки на підставі масиву даних galleryItems і
 // наданого шаблону елемента галереї.
+
+const boxGallery = document.querySelector(".gallery");
+const addGalleryItems = galleryItems.map((item) =>
+`<div class="gallery__item">
+  <a class="gallery__link" href=${item.original}>
+    <img
+      class="gallery__image"
+      src=${item.preview}
+      data-source=${item.original}
+      alt=${item.description}
+    />
+  </a>
+</div >`).join(" ");
+boxGallery.insertAdjacentHTML("beforeend", `${addGalleryItems}`);
 // Реалізація делегування на div.gallery і отримання url великого зображення.
+// const selectImage = (event) => {
+//   if (event.target.nodeName !== "IMG") {
+//     return;
+//   }
+
+//   const selectedImage = event.target.dataset.source;
+// };
+// const addOnGalleryItemsClick = boxGallery.addEventListener("click", selectImage);
+// const removeOnGalleryItemsClick = boxGallery.removeEventListener("click", selectImage);
+console.log(galleryItems);
+
 // Підключення скрипту і стилів бібліотеки модального вікна basicLightbox.
 // Використовуй CDN сервіс jsdelivr і додай у проект посилання на
 // мініфіковані(.min) файли бібліотеки.
