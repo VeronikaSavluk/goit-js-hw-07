@@ -28,26 +28,35 @@ boxGallery.insertAdjacentHTML("beforeend", `${addGalleryItems}`);
 // Заміна значення атрибута src елемента <img> в модальному вікні перед відкриттям.
 // Використовуй готову розмітку модального вікна із зображенням
 //  з прикладів бібліотеки basicLightbox.
+// Додай закриття модального вікна після натискання клавіші Escape.
+// Зроби так, щоб прослуховування клавіатури було тільки доти, доки відкрите модальне вікно.
+// Бібліотекаи basicLightbox містить метод для програмного закриття модального вікна.
 const selectImage = (event) => {
   event.preventDefault();
   if (event.target.nodeName !== "IMG") {
     return;
   }
-  const instance = basicLightbox.create(`
+    const instance = basicLightbox.create(`
     <div class="modal">
         <img src="${event.target.dataset.source}">
         </div>
 `, {
     onShow: (instance) => {
-        instance.element().querySelector('img').onclick = instance.close;
-    }
-});
+      window.addEventListener("keydown", onEsc);
+      instance.element().querySelector("img").onclick = instance.close;
+      },
+    onClose: (instance) => {
+      window.removeEventListener("keydown", onEsc);
+      }
+    });
+    const onEsc = (event) => {
+      if (event.key === "Escape") {
+      instance.close();
+    };
+    };
   instance.show();
 };
 boxGallery.addEventListener("click", selectImage);
-// boxGallery.addEventListener("keydown", selectImage);
+
 console.log(galleryItems);
 
-// Додай закриття модального вікна після натискання клавіші Escape.
-// Зроби так, щоб прослуховування клавіатури було тільки доти, доки відкрите модальне вікно.
-// Бібліотекаи basicLightbox містить метод для програмного закриття модального вікна.
