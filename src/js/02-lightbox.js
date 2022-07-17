@@ -6,7 +6,7 @@ import { galleryItems } from './gallery-items.js';
 const boxGallery = document.querySelector(".gallery");
 const addGalleryItems = galleryItems.map((item) =>
 `<li><a class="gallery__item" href=${item.original}>
-  <img class="gallery__image" src=${item.preview} alt="" title=${item.description} />
+  <img class="gallery__image" src=${item.preview} alt=${item.description} />
 </a></li>`).join(" ");
 boxGallery.insertAdjacentHTML("beforeend", `${addGalleryItems}`);
 
@@ -24,13 +24,10 @@ boxGallery.insertAdjacentHTML("beforeend", `${addGalleryItems}`);
 // додай відображення підписів до зображень з атрибута alt.
 // Нехай підпис буде знизу і з'являється через 250 мілісекунд
 // після відкриття зображення.
+
 const selectImage = (event) => {
   event.preventDefault();
-  if (event.target.nodeName !== "IMG") {
-    return;
-  }
-  let lightbox = new SimpleLightbox('.gallery a');
-
+  let gallery = new SimpleLightbox('.gallery a', { captionsData: `alt`, captionDelay: 250 });
 };
 boxGallery.addEventListener("click", selectImage);
 
